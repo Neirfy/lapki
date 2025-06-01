@@ -15,25 +15,37 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
+Requriment 
+Node version 22.7.0
+Yarn version 4.4.0
 
 ```sh
-npm install
+Set yanr i pnp mode
+```
+
+```sh
+yanr install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+yarn build
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
-npm run lint
+yarn lint
+```
+
+## Project Deploy
+```sh
+make deploy
 ```
