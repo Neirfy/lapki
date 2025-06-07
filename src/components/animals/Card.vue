@@ -4,13 +4,21 @@ import Loader from '@/components/Loader.vue';
 
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/users/user';
+
+const userStore = useUserStore()
 const animalsStore = useAnimalsStore()
 
 const router = useRouter()
-const handleEditAnimal = (id: string) => {
-router.push({ name: 'editAnimal', params: { id: id } })
-  // console.log(1111)
+
+const handleEditAnimal = async (id: string) => {
+  if (userStore.user?.role === 'organization'){
+    await router.push({ name: 'editAnimal', params: { id: id } })
+  } else {
+    await router.push({ name: 'userAnimal', params: { id: id } })
+  }
 }
+
 onMounted(async () =>{
   await animalsStore.getAnimals()
 })

@@ -1,18 +1,18 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import breedApi from '@/api/requests/api.breed'
-import type { BreedInfo } from '@/types/breeds';
+import requestApi from '@/api/requests/api.requests'
+import type { RequestInfo } from '@/types/requests';
 
 export const useOrderStore = defineStore('order', () => {
-  const order = ref<BreedInfo[]>([]);
-  const selected = ref<BreedInfo | null>(null)
+  const orders = ref<RequestInfo[]>([]);
+  const selected = ref<RequestInfo | null>(null)
   const isLoading = ref(false);
 
-  const getBreeds = async () => {
+  const getOrders = async () => {
     isLoading.value = true;
     try {
-      const response = await breedApi.getBreeds()
-      order.value = response
+      const response = await requestApi.getReusests()
+      orders.value = response
       selected.value = response[0]
     } catch (error) {
       console.log(error);
@@ -22,9 +22,9 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   return {
-    order,
+    orders,
     selected,
     isLoading,
-    getBreeds,
+    getOrders,
   }
 })

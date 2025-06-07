@@ -14,7 +14,7 @@ const statusStore = useStatusStore()
 const animalFiltersStore = useAnimalFiltersStore()
 
 const handleSearch = async () => {
-  console.log(111)
+  // console.log(111)
   await animalsStore.getAnimals()
 }
 
@@ -38,6 +38,7 @@ onMounted(async () => {
       v-model="animalFiltersStore.animalFilter.age"
       name="age"
       type="number"
+      @update:modelValue="(val) => {animalFiltersStore.animalFilter.age = val === '' ? null : Number(val)}"
     />
 
 
@@ -45,9 +46,12 @@ onMounted(async () => {
     <label class="lbl color-black" for="breed">Порода</label>
     <select
       id="breed"
+      v-model="animalFiltersStore.animalFilter.breed"
       class="ui-select"
       v-if="breedStore.breeds"
     >
+      <option value="">— Не выбрано —</option>
+
       <option v-for="breed in breedStore.breeds" :value="breed.id">
         {{ breed.name }}
       </option>
@@ -70,9 +74,11 @@ onMounted(async () => {
     <label class="lbl color-black" for="status">Статус приручения</label>
     <select
       id="status"
+      v-model="animalFiltersStore.animalFilter.status"
       class="ui-select"
       v-if="breedStore.breeds"
     >
+      <option value="">— Не выбрано —</option>
       <option v-for="status in statusStore.statuses" :value="status.id">
         {{ status.name }}
       </option>

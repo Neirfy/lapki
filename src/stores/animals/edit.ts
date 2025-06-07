@@ -33,7 +33,7 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
         name: response.name,
         age: response.age,
         description: response.description ?? "",
-        id_status: response.status.id,
+        id_status: response.status.id ?? "",
         id_breed: response.breed.id ?? "",
         id_user: "",
       }
@@ -71,7 +71,7 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
       isLoading.value = false;
     }
   }
-  
+
 
   return {
     animalEdit,

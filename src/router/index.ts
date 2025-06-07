@@ -48,7 +48,7 @@ const organizationRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'setting',
-        name: 'orgSetting',
+        name: 'orgSettings',
         component: () => import('@/views/settings/OrganizationView.vue'),
         meta: {
           title: 'Управление аккаунтом'
@@ -95,17 +95,18 @@ const userRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'Животные в приюте'
         },
-        children: [
+      },
+        // children: [
           {
 
-            path: ':id',
+            path: 'animals:id',
             name: 'userAnimal',
             component: () => import('@/views/animals/user/AnimalView.vue'),
-            // meta: {
-              //   title: 'Животные в приюте'
-              // },
-            }
-        ]
+            meta: {
+                title: 'Информация о животном'
+              },
+
+        // ]
 
       },
       {

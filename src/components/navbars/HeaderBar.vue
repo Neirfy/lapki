@@ -1,7 +1,9 @@
 <template>
     <header class="topbar" :class="{ hidden: userStore.isSidebarOpen }">
       <template v-if="!userStore.isSidebarOpen">
-        <img src="@/assets/images/logo.png" alt="Logo" />
+        <img
+          class="logo"
+          src="@/assets/images/logo.png" alt="Logo" />
         <span class="title">Добрые лапки</span>
       </template>
 
@@ -10,9 +12,31 @@
         <template v-if="userStore.isSidebarOpen">
           <span class="title-page">{{ route.meta.title }}</span>
         </template>
-        <button class="burger" @click="toggleSidebar">{{ userStore.isSidebarOpen ? '<' : '>' }}</button>
-        <button class="burger" @click="toggleSetting">X</button>
-        <button class="burger" @click="toggleLogout">☰</button>
+        <button class="burger">
+          <img
+            :class="userStore.isSidebarOpen ? 'show' : ''"
+            style="padding: 10px;"
+            src="@/assets/images/show.png"
+             @click="toggleSidebar"
+          />
+        </button>
+        <button class="burger" @click="toggleLogout">
+          <img
+            class=""
+            style="padding: 8px;"
+            src="@/assets/images/logout.png"
+             @click="toggleSetting"
+
+          />
+
+        </button>
+        <button class="burger" @click="toggleSetting">
+        <img
+            class=""
+            src="@/assets/images/no-photo.png"
+             @click="toggleSetting"
+          />
+        </button>
       </div>
     </header>
 </template>
@@ -31,14 +55,17 @@ const toggleSidebar = () => {
 }
 
 const toggleSetting = () => {
-  userStore.isSidebarOpen = !userStore.isSidebarOpen
+  if (userStore.user?.role === 'organization') {
+    void router.push({name: 'orgSettings'})
+  } else {
+    void router.push({name: 'userSettings'})
+  }
 }
+
 const toggleLogout = () => {
   localStorage.removeItem('token')
   void router.push('login')
 }
-
-
 </script>
 
 <style scoped lang="scss">
@@ -58,21 +85,30 @@ const toggleLogout = () => {
   padding: 0 16px;
   z-index: 100;
   transition: all 0.3s ease;
+      transition: transform 0.3s ease;
+
 
   img{
-    width: 98px;
-      height: 78px;
+    width: 34px;
+    height: 34px;
+  }
+  img.show{
+    transform: rotate(180deg);
+
   }
 
 
   &.hidden {
-    background-color: transparent;
+    // background-color: transparent;
+    width: calc(100% - 266px);
+    background-color: white;
+    // border-radius: 0;
     box-shadow: none;
-    height: 56px;
+    height: 66px;
     justify-content: flex-start;
+    transform: translateX(266px);
 
-
-    img,
+    img.logo,
     .title {
       display: none;
     }
@@ -132,81 +168,4 @@ const toggleLogout = () => {
 }
 
 
-
-// .sidebar {
-//   position: fixed;
-//   top: 0; // Было 56px — убираем
-//   left: 0;
-//   width: 260px;
-//   height: 100vh; // Было calc(100vh - 56px)
-//   background-color: #b3e6f3;
-//   border-top-right-radius: 20px;
-//   border-bottom-right-radius: 20px;
-//   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-//   transform: translateX(-100%);
-// transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-
-//   &.open {
-//     transform: translateX(0);
-//   }
-
-//   &__content {
-//     padding: 24px 16px;
-//   }
-
-//   &__logo {
-//     display: flex;
-//     align-items: center;
-//     margin-bottom: 48px;
-//   }
-
-//   &__logo-icon {
-//     font-size: 28px;
-//     color: #ff7f50;
-//     margin-right: 8px;
-//   }
-
-//   &__logo-text {
-//     font-size: 20px;
-//     font-weight: 600;
-//     color: #ff7f50;
-//     line-height: 1.1;
-//   }
-
-//   &__nav {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 24px;
-//   }
-
-//   &__item {
-//     display: flex;
-//     align-items: center;
-//     cursor: pointer;
-//     transition: opacity 0.2s ease;
-
-//     &:hover {
-//       opacity: 0.75;
-//     }
-//   }
-
-//   &__icon {
-//     font-size: 22px;
-//     margin-right: 10px;
-//     color: #000;
-//   }
-
-//   &__text {
-//     font-size: 14px;
-//     color: #000;
-//   }
-// }
-
-// .content {
-//   flex: 1;
-//   margin-left: 0;
-//   margin-top: 56px;
-//   padding: 24px;
-//   transition: margin-left 0.3s ease;
-// }
 </style>

@@ -40,18 +40,20 @@ onMounted(async () => {
           @click="toggleOrder('desc')"
         >
 
-        <select
+        <!-- <select
           id="type"
           class="ui-select"
         >
           <option>Вид животного</option>
-        </select>
+        </select> -->
 
         <select
           id="breed"
           class="ui-select"
+          v-model="animalFiltersStore.animalFilter.breed"
           v-if="breedStore.breeds"
         >
+          <option value="">— Не выбрано —</option>
           <option v-for="breed in breedStore.breeds" :value="breed.id">
             {{ breed.name }}
           </option>

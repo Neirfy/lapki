@@ -12,9 +12,7 @@ export const useBreedStore = defineStore('breed', () => {
     isLoading.value = true;
     try {
       const response = await breedApi.getBreeds()
-      breeds.value = [
-        { id: undefined, name: 'Не выбрано' },
-        ...response]
+      breeds.value = response
       selected.value = response[0]
     } catch (error) {
       console.log(error);

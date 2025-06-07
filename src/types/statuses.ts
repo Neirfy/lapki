@@ -1,4 +1,4 @@
 export type StatusInfo = {
-    id: string
+    id?: string
     name: string
   }

@@ -1,9 +1,9 @@
-import { ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { AnimalFilter, OrderBy } from '@/types/animals';
 
 export const useAnimalFiltersStore = defineStore('animalFilter', () => {
-  const animalFilter = ref<AnimalFilter>({
+  const animalFilter = reactive<AnimalFilter>({
     status: "",
     breed: "",
     organization: "",

@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import Filter from '@/components/animals/Filter.vue';
+// import Filter from '@/components/animals/Filter.vue';
 import SortOrganizationFilter from '@/components/animals/SortOrganizationFilter.vue';
 import Card from '@/components/animals/Card.vue';
 </script>

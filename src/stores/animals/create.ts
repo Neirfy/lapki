@@ -32,7 +32,7 @@ export const useAnimalCreateStore = defineStore('animalCreate', () => {
           animalCreate.value.id_user = userStore.user.id
           if (breedStore.selected && statusStore.selected) {
             animalCreate.value.id_breed = breedStore.selected.id ?? ""
-            animalCreate.value.id_status = statusStore.selected?.id
+            animalCreate.value.id_status = statusStore.selected?.id ?? ""
           }
           await animalsApi.createAnimal(animalCreate.value)
         }
