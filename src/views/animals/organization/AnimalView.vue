@@ -6,16 +6,10 @@ import Card from '@/components/animals/Card.vue';
 </script>
 
 <template>
-  <div
-    class="page-layout"
-  >
-    <!-- <Filter></Filter> -->
-    <div class="right-column">
+    <div class="main-content">
       <SortOrganizationFilter></SortOrganizationFilter>
-
       <Card />
     </div>
-  </div>
 </template>
 
 <style>

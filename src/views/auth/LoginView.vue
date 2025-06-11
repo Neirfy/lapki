@@ -2,15 +2,13 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import apiAuth from '@/api/requests/api.auth';
-import UiInput from '@/components/uikit/UiInput.vue';
-import Loader from '@/components/Loader.vue';
 import type { UserLogin } from '@/types/user';
 import { useUserStore } from '@/stores/users/user';
 
 const userStore = useUserStore()
 const router = useRouter()
 const isLoading = ref(false)
-// const username = ref("")
+
 const loginData = ref<UserLogin>({
   username: "",
   password: ""
@@ -26,11 +24,13 @@ const handleLogin = async () => {
     if (response) {
       localStorage.setItem('token', response.access_token)
       await userStore.getUser();
-      if (userStore.user?.role == 'user'){
-        void router.push({ name: 'userAnimals' })
-      } else if (userStore.user?.role == 'organization'){
-        void router.push({ name: 'orgAnimals' })
-      }
+      void router.push({ name: 'main' })
+
+      // if (userStore.user?.role == 'user'){
+      //   void router.push({ name: 'userAnimals' })
+      // } else if (userStore.user?.role == 'organization'){
+      //   void router.push({ name: 'orgAnimals' })
+      // }
 
     }
   } catch (err) {
@@ -46,60 +46,57 @@ const handleRegistration = () => {
 </script>
 
 <template>
-  <div v-if="isLoading">
+  <!-- <div v-if="isLoading">
     <Loader></Loader>
-  </div>
-  <div
-    v-else
-   class="container1">
-    <img class="img-left" src="@/assets/images/leftLogo.png" alt="Left Image" />
-    <img class="img-right" src="@/assets/images/rightLogo.png" alt="Right Image" />
+  </div> -->
+  <div class="login-wrapper">
+    <!-- <img class="img-left" src="@/assets/images/leftLogo.png" alt="Left Image" />
+    <img class="img-right" src="@/assets/images/rightLogo.png" alt="Right Image" /> -->
 
-    <div class="card">
-      <div class="content">
-        <img src="@/assets/images/logo.png" alt="Logo" />
-        <span class="color-primary">Добрые лапки</span>
+    <!-- <div class="card"> -->
+      <div class="login">
+        <div class="logo-name">
+          <img src="@/assets/images/logo.png" alt="">
+          <div class="logo-name-text">
+            <h2>Добрые</h2>
+            <h2>лапки</h2>
+          </div>
+        </div>
+        <h1>Логин:</h1>
+        <div class="input-box">
+            <input
+              v-model="loginData.username"
+              id="login"
+              type="text" placeholder="Введите логин" required>
+            <!-- <i class='bx bxs-user'></i> -->
+        </div>
+        <h1>Пароль:</h1>
 
-        <label
-          class="lbl lbl-login lbl-while"
-          for="username">Логин</label>
-        <UiInput
-          class="inp inp-primary"
-          id="username"
-          v-model="loginData.username"
-          name="username"
-          type="stinrg"
-          autocomplete="username"
-        />
-
-        <label
-          class="lbl lbl-login lbl-while"
-          for="password">Пароль</label>
-        <UiInput
-          class="inp inp-primary"
-          id="password"
-          v-model="loginData.password"
-          name="password"
-          type="password"
-          autocomplete="current-password"
-        />
-
+        <div class="input-box">
+            <input
+              v-model="loginData.password"
+              id="password"
+              type="password"
+              placeholder="Введите пароль"
+              required>
+            <!-- <i class='bx bxs-lock-alt' ></i> -->
+        </div>
         <button
-          class="btn btn-primary"
+          class="btn"
           @click="handleLogin"
           >
         Войти
         </button >
         <button
-          class="btn btn-primary"
+          class="register-link"
           @click="handleRegistration"
-        >Зарегестрироваться</button>
-      </div>
+        >Зарегистрироваться
+      </button>
     </div>
   </div>
 </template>
 
-
+<!--
 <style scoped lang="scss">
 
 .container1 {
@@ -153,4 +150,5 @@ const handleRegistration = () => {
   align-items: center;
   gap: 0.5rem;
 }
-</style>
+
+</style> -->

@@ -2,9 +2,9 @@
 import Header from '@/components/navbars/Header.vue'
 </script>
 <template>
-  <div class="layout">
+  <div class="">
     <Header />
-    <main class="content" >
+    <main class="" >
 
     <RouterView />
     </main>

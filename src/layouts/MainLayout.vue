@@ -6,18 +6,18 @@ import { useUserStore } from '@/stores/users/user'
 const userStore = useUserStore()
 </script>
 <template>
-  <div class="layout">
+  <div>
 
     <HeaderBar>
     </HeaderBar>
-    <SideBar />
-    <main class="content" :class="{ open: userStore.isSidebarOpen }">
+    <!-- <SideBar /> -->
+    <main class="content-wrapper" :class="{ open: userStore.isSidebarOpen }">
       <RouterView/>
     </main>
   </div>
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .layout {
   display: flex;
   height: 100vh;
@@ -42,4 +42,4 @@ const userStore = useUserStore()
 
 }
 
-</style>
+</style> -->

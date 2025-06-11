@@ -5,8 +5,8 @@ import animalsApi from '@/api/requests/api.animals';
 import fileApi from '@/api/requests/api.file'
 
 import { useUserStore } from '@/stores/users/user';
-import { useBreedStore } from '@/stores/animals/breeds';
-import { useStatusStore } from '@/stores/animals/statuses';
+// import { useBreedStore } from '@/stores/animals/breeds';
+// import { useStatusStore } from '@/stores/animals/statuses';
 import type { AnimalRequest} from '@/types/animals';
 
 
@@ -20,35 +20,43 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
     id_breed: "",
     id_user: "",
   });
+  const uuid = ref("");
   const isLoading = ref(false);
-  const userStore = useUserStore();
-  const breedStore = useBreedStore();
-  const statusStore = useStatusStore();
+  // const userStore = useUserStore();
+  // const breedStore = useBreedStore();
+  // const statusStore = useStatusStore();
 
-  const getAnimal = async (uuid: string) => {
-    const response = await animalsApi.getAnimal(uuid)
-    if (response) (
-      animalEdit.value = {
-        photo: response.photo ?? "",
-        name: response.name,
-        age: response.age,
-        description: response.description ?? "",
-        id_status: response.status.id ?? "",
-        id_breed: response.breed.id ?? "",
-        id_user: "",
-      }
-    )
+  const getAnimal = async () => {
+    isLoading.value = true
+    try {
+      const response = await animalsApi.getAnimal(uuid.value)
+      if (response) (
+        animalEdit.value = {
+          photo: response.photo ?? "",
+          name: response.name,
+          age: response.age,
+          description: response.description ?? "",
+          id_status: response.status.id ?? "",
+          id_breed: response.breed.id ?? "",
+          id_user: "",
+        }
+      )
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   const editAnimal = async () => {
     isLoading.value = true;
     try {
-      if (userStore.user){
-        animalEdit.value.id_user = userStore.user.id
-        if (breedStore.selected?.id && statusStore.selected?.id ) {
-          animalEdit.value.id_breed = breedStore.selected.id
-          await animalsApi.createAnimal(animalEdit.value)
-        }
+      if (uuid.value){
+        // animalEdit.value.id_user = userStore.user.id
+        // if (breedStore.selected?.id && statusStore.selected?.id ) {
+        //   animalEdit.value.id_breed = breedStore.selected.id
+          await animalsApi.editAnimal(uuid.value, animalEdit.value)
+        // }
       }
     } catch (error) {
       console.log(error);
@@ -73,8 +81,10 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
   }
 
 
+
   return {
     animalEdit,
+    uuid,
     isLoading,
     getAnimal,
     editAnimal,

@@ -1,8 +1,21 @@
 @import "variables/_colors";
-@import "foundation/_variables";
+@import "foundation/_font";
+
 @import "foundation/base";
+@import "layout/_wrappers";
+@import "components/_login";
 
-@import "layout/header";
+@import "components/_card";
+@import "components/_header";
+@import "components/_navbar";
+@import "components/_settings";
 
-@import "components/_fields";
-@import "components/typography";
+@import "components/_filter";
+@import "components/_sort";
+@import "components/_pagination";
+@import "components/_registration";
+@import "components/_popup";
+
+
+
+

@@ -22,6 +22,20 @@ export type AnimalItemInfo = {
   status: StatusInfo
 }
 
+type Organization = {
+  id: string
+  name: string
+  address: string
+  phone1: string
+  phone2: string
+  vk: string
+  tg: string
+}
+export type AnimalUserItemInfo = AnimalItemInfo & {
+  organization: Organization
+}
+
+
 export type AnimalsInfo = {
   items: AnimalItemInfo[]
   pagination: PaginationInfo

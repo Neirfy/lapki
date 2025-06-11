@@ -1,7 +1,7 @@
-import type { UserEdit, UserInfo, UserRegister } from "@/types/user.ts";
+import type { UserInfo, UserRegister, UserRequest } from "@/types/user.ts";
 
 import { axiosInstance } from "../axios.instance.ts";
-import type { FileInfo } from "@/types/file.ts";
+// import type { FileInfo } from "@/types/file.ts";
 
 export default {
   getUser(): Promise<UserInfo> {
@@ -10,10 +10,10 @@ export default {
   createUser(data: UserRegister): Promise<UserInfo> {
     return axiosInstance.post<UserInfo>(`/auth/register`, data);
   },
-  editUser(data: UserEdit): Promise<UserInfo> {
-    return axiosInstance.post<UserInfo>(`/auth/edit`, data);
+  editUser(user_id: string, data: UserRequest): Promise<UserInfo> {
+    return axiosInstance.put<UserInfo>(`/users/${user_id}`, data);
   },
-  upload(file: FormData): Promise<UserInfo> {
-      return axiosInstance.post<UserInfo>("users/photo/update", file);
-    }
+  uploadPhoto(file: FormData): Promise<UserInfo> {
+    return axiosInstance.post<UserInfo>("users/photo/update", file);
+  }
 };

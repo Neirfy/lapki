@@ -1,0 +1,131 @@
+
+
+.login-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('@/assets/images/autho.png');
+  background-size:contain; /* если надо, чтобы картинка заполняла фон */
+  background-position: center;
+
+  .login{ /* рамка авторизации */
+    width: 420px;
+    background-color: #8ACFE6;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: white;
+    border-radius: 10px;
+    padding: 30px 40px;
+
+    h1{
+      font-size: 24px;
+      text-align: left;
+    }
+
+    .input-box{
+      width: 100%;
+      height: 40px;
+      margin: 10px 0;
+      position: relative;
+
+    input {
+        width: 100%;
+        height: 100%;
+        background: #FFD1DC;
+        border: none;
+        outline: none;
+        border: 2px solid rgb(255, 255, 255, .2);
+        border-radius: 40px;
+        font-size: 16px;
+        color: black;
+        padding: 20px 45px 20px 20px;
+    }
+
+
+    input::placeholder{
+        color: white;
+    }
+
+     i{
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: black;
+    }
+  }
+
+     .btn{
+        width: 100%;
+        height: 45px;
+        background: #FF6F61;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+        cursor: pointer;
+        font-size: 16px;
+        color: white;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+          //  color: #FF6F61;
+        }
+    }
+
+    .register-link{
+        width: 100%;
+        height: 45px;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white;
+        cursor: pointer;
+        font-size: 14.5px;
+        text-align: center;
+        margin-top: 20px;
+
+        &:hover{
+           text-decoration: underline;
+           color: #FF6F61;
+       }
+    }
+
+
+
+
+    .logo-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .logo-name img {
+        width: 70px; /* уменьшаем размер логотипа */
+        height: auto;
+    }
+
+    .logo-name-text h2 {
+        margin: 0;
+        color: #FF6F61;
+        font-size: 26px;
+        font-weight: 500;
+        text-align: left; /* выравнивание текста по левому краю */
+    }
+
+    .logo-name-text {
+        display: flex;
+        flex-direction: column;
+    }
+  }
+}
+
+

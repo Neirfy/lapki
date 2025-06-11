@@ -1,126 +1,90 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useBreedStore } from '@/stores/animals/breeds'
 import { useStatusStore } from '@/stores/animals/statuses'
 import { useAnimalFiltersStore } from '@/stores/animals/filter'
-
-import { onMounted } from 'vue';
-
-import UiInput from '../uikit/UiInput.vue';
 import { useAnimalsStore } from '@/stores/animals/animals';
+import { useOrganizationStore } from '@/stores/animals/organizations';
 
 const animalsStore = useAnimalsStore()
 const breedStore = useBreedStore()
 const statusStore = useStatusStore()
 const animalFiltersStore = useAnimalFiltersStore()
-
-const handleSearch = async () => {
-  // console.log(111)
-  await animalsStore.getAnimals()
-}
+const organizationStore = useOrganizationStore()
 
 
 onMounted(async () => {
   await breedStore.getBreeds()
   await statusStore.getStatuses()
+  await organizationStore.getOrganizations()
 })
 </script>
+
 <template>
-  <div class="container1">
-    <div class="filter">
+    <div class="filters-sidebar">
+      <div class="filters-section">
+        <h3>Фильтры</h3>
+        <div class="filter-dropdown">
+          <label for="age">Возраст</label>
+          <input
+            class="inp "
+            id="age"
+            v-model="animalFiltersStore.animalFilter.age"
+            name="age"
+            type="number"
+          />
+          <!-- @update:modelValue="(val) => {animalFiltersStore.animalFilter.age = val === '' ? null : Number(val)}" -->
+        </div>
+        <div class="filter-dropdown">
+          <label class="lbl color-black" for="organization">Порода</label>
+            <select
+              id="organization"
+              v-model="animalFiltersStore.animalFilter.breed"
+              class="ui-select"
+              v-if="breedStore.breeds"
+            >
+              <option value="">— Не выбрано —</option>
 
-    <label
-      class="lbl lbl-while"
-      for="age">Возраст
-    </label>
-    <UiInput
-      class="inp "
-      id="age"
-      v-model="animalFiltersStore.animalFilter.age"
-      name="age"
-      type="number"
-      @update:modelValue="(val) => {animalFiltersStore.animalFilter.age = val === '' ? null : Number(val)}"
-    />
+              <option v-for="breed in breedStore.breeds" :value="breed.id">
+                {{ breed.name }}
+              </option>
+            </select>
+        </div>
+        <div class="filter-dropdown">
+          <label for="breed">Организация</label>
+          <select
+            id="breed"
+            v-model="animalFiltersStore.animalFilter.organization"
+            class="ui-select"
+            v-if="breedStore.breeds"
+          >
+            <option value="">— Не выбрано —</option>
 
-
-
-    <label class="lbl color-black" for="breed">Порода</label>
-    <select
-      id="breed"
-      v-model="animalFiltersStore.animalFilter.breed"
-      class="ui-select"
-      v-if="breedStore.breeds"
-    >
-      <option value="">— Не выбрано —</option>
-
-      <option v-for="breed in breedStore.breeds" :value="breed.id">
-        {{ breed.name }}
-      </option>
-    </select>
-
-    <label
-      class="lbl lbl-while"
-      for="username">Город
-    </label>
-    <UiInput
-      class="inp "
-      id="username"
-      v-model="animalFiltersStore.animalFilter.organization"
-      name="username"
-      type="text"
-      autocomplete="username"
-    />
-
-
-    <label class="lbl color-black" for="status">Статус приручения</label>
-    <select
-      id="status"
-      v-model="animalFiltersStore.animalFilter.status"
-      class="ui-select"
-      v-if="breedStore.breeds"
-    >
-      <option value="">— Не выбрано —</option>
-      <option v-for="status in statusStore.statuses" :value="status.id">
-        {{ status.name }}
-      </option>
-    </select>
-    <button
-    @click="handleSearch"
-    >Найти</button>
-    </div>
-</div>
+            <option v-for="organization in organizationStore.organizations" :value="organization.id">
+              {{ organization.name }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <label for="status">Статус приручения</label>
+          <select
+            id="status"
+            v-model="animalFiltersStore.animalFilter.status"
+            class="ui-select"
+            v-if="breedStore.breeds"
+          >
+            <option value="">— Не выбрано —</option>
+            <option v-for="status in statusStore.statuses" :value="status.id">
+              {{ status.name }}
+            </option>
+          </select>
+          <button
+            class="btn"
+            @click="animalsStore.getAnimals"
+          >
+            Найти
+          </button>
+        </div>
+        </div>
+      </div>
 </template>
-
-<style scoped lang="scss">
-.container1 {
-  width: 350px;
-
-}
-
-.filter {
-  height: 649px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: #D9F1F9;
-  border-radius: 40px;
-  padding: 20px;
-  box-shadow: 5px 5px 10px #ccc;
-}
-
-.ui-select,
-.inp {
-  height: 40px;
-  padding: 0 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px #ccc;
-}
-
-button {
-  height: 40px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  cursor: pointer;
-  box-shadow: 2px 2px 5px #ccc;
-}
-</style>

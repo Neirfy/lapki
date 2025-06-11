@@ -2,10 +2,28 @@
 import { onMounted, ref } from 'vue'
 import { useEditUserStore } from '@/stores/users/edit'
 import Loader from '@/components/Loader.vue';
+import Modal from '@/components/popup/Modal.vue';
 
 const editUserStore = useEditUserStore()
-
+const showConfirmModal = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
+
+const handleEdit =() =>{
+    showConfirmModal.value = true
+}
+
+const confirmSave = async () => {
+  showConfirmModal.value = false
+  try {
+    await editUserStore.editUser()
+  } catch (e) {
+    console.error('Ошибка при сохранении', e)
+  }
+}
+
+const cancelSave = () => {
+  showConfirmModal.value = false
+}
 
 const triggerFileInput = () => {
   fileInput.value?.click()
@@ -14,19 +32,12 @@ const triggerFileInput = () => {
 const onFileChange = async (event: Event) => {
   const target = event.target as HTMLInputElement
   if (!target.files || !target.files.length) return
-
   const file = target.files[0]
-
-  // Заливаем файл сразу по выбору
   const formData = new FormData()
   formData.append('file', file)
 
   try {
     await editUserStore.editPhoto(formData)
-    // После успешной загрузки можно обновить превью
-    // Если createAnimalStore.animalCreate.photo обновляется автоматически — отлично
-
-    // Очищаем input чтобы сработало на тот же файл
     // target.value = ''
   } catch (e) {
     console.error('Ошибка загрузки фото', e)
@@ -39,208 +50,79 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="setting-wrapper">
+    <Loader v-show="editUserStore.isLoading" />
+    <div class="avatar-container">
+      <div class="avatar-setting">
+        <img
+          v-if="editUserStore.photo.path"
+          :src="editUserStore.photo.path"
+          alt="Аватар"
+        />
+        <img
+          v-else
+          class="skeleton"
+          src="@/assets/images/no-photo.png"
+          alt="Нет фото"
+        />
+      </div>
 
+        <button
+        class="avatar-btn blue-btn"
+        @click="triggerFileInput"
+        >
+          Изменить аватар
+        </button>
+        <input
+          ref="fileInput"
+          type="file"
+          accept="image/*"
+          @change="onFileChange"
+          style="display: none"
+        />
+      </div>
+    <div class="info-section">
+      <label for="surname">Фамилия:</label>
+      <input
+        id="surname"
+        v-model="editUserStore.user.surname"
+        type="text" />
+      <label>Имя:</label>
+      <input
+        v-model="editUserStore.user.name"
+        type="text" />
+      <label>Отчество*:</label>
+      <input
+        v-model="editUserStore.user.patronymic"
+        type="text" />
+      <label>Дата рождения:</label>
+      <input
+        v-model="editUserStore.user.birthday"
+        type="date"
+      />
+      <button @click="handleEdit">Сохранить изменения</button>
+    </div>
 
-      <section class="profile-section">
-        <Loader v-if="editUserStore.isLoading" />
-        <div v-else class="avatar-block">
+    <div class="info-section">
+      <label>Номер телефона:</label>
+      <input
+        v-model="editUserStore.user.phone1"
+        type="text" />
+      <label>Почта:</label>
+      <input
+        v-model="editUserStore.user.email"
+        type="text" />
+      <label>Город проживания:</label>
+      <input
+        v-model="editUserStore.user.address"
+        type="text" />
 
-          <img
-            v-if="editUserStore.user.photo"
-            :src="editUserStore.user.photo"
-            alt="Фото животного"
-            />
-            <!-- @click="triggerFileInput" -->
-          <img
-            v-else
-            class="skeleton"
-            src="@/assets/images/no-photo.png"
-            alt="Нет фото"
-            />
-            <!-- @click="triggerFileInput" -->
-          <input
-      ref="fileInput"
-      type="file"
-      accept="image/*"
-      @change="onFileChange"
-      style="display: none"
-    />
-
-
-          <!-- <img v-if="editUserStore.user.photo" :src="editUserStore.user.photo">
-      <img v-else
-      class="skeleton"
-      src="@/assets/images/no-photo.png">
-      <button
-        @click="handleChangePhoto"
-      >
-      <input type="file" @change="onFileChange" accept="image/*" />
-
-      Изменить фото</button> -->
-
-          <!-- <div class="avatar-placeholder">👤</div> -->
-          <p class="changeme" @click="triggerFileInput">Сменить аватар</p>
-        </div>
-
-        <div class="info-card">
-          <label>Фамилия:</label>
-          <input
-            v-model="editUserStore.user.surname"
-            type="text" />
-          <label>Имя:</label>
-          <input
-            v-model="editUserStore.user.name"
-            type="text" />
-          <label>Отчество*:</label>
-          <input
-            v-model="editUserStore.user.patronymic"
-            type="text" />
-          <!-- <label>Дата рождения:</label>
-          <input type="date" /> -->
-
-          <button>Сохранить изменения</button>
-        </div>
-
-        <div class="contacts-card">
-          <!-- <label>Номер телефона:</label>
-          <input
-            v-model="editUserStore.user."
-            type="text" /> -->
-          <!-- <input type="text" /> -->
-          <label>Почта:</label>
-          <input
-            v-model="editUserStore.user.email"
-            type="text" />
-          <label>Город проживания:</label>
-          <input
-            v-model="editUserStore.user.address"
-            type="text" />
-
-          <!-- <div class="social-icons">
-            <img src="/vk.svg" alt="VK" />
-            <img src="/tg.svg" alt="Telegram" />
-          </div> -->
-
-          <button>Сохранить</button>
-        </div>
-
-        <!-- <div class="description-card">
-          <label>Информация о приюте (Описание):</label>
-          <textarea rows="5"></textarea>
-          <button>Сохранить изменения</button>
-        </div> -->
-      </section>
-    <!-- </main> -->
-  <!-- </div> -->
+      <button @click="handleEdit">Сохранить</button>
+    </div>
+    <Modal
+      :show="showConfirmModal"
+      message="Вы уверены, что хотите сохранить изменения?"
+      @confirm="confirmSave"
+      @cancel="cancelSave"/>
+  </div>
 </template>
-
-<style scoped lang="scss">
-.changeme{
-  cursor: pointer;
-}
-.account-settings {
-  display: flex;
-  font-family: sans-serif;
-}
-
-.sidebar {
-  background: #b3e5fc;
-  width: 200px;
-  padding: 20px;
-  border-right: 2px solid #2196f3;
-}
-
-.logo {
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-nav li {
-  margin: 10px 0;
-  cursor: pointer;
-}
-
-nav li.active {
-  font-weight: bold;
-}
-
-.content {
-  flex: 1;
-  padding: 20px;
-  background: #fff;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.profile-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.avatar-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  img {
-    max-width: 200px;
-    max-height: 200px;
-   }
-}
-
-.avatar-placeholder {
-  width: 100px;
-  height: 100px;
-  background: #ffcdd2;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-}
-
-.info-card,
-.contacts-card,
-.description-card {
-  background: #e0e0e0;
-  padding: 20px;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-input,
-textarea {
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  align-self: flex-end;
-  background: #ff8a80;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.social-icons img {
-  height: 32px;
-  margin-right: 8px;
-  cursor: pointer;
-}
-</style>

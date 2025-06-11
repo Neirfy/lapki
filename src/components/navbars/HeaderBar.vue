@@ -1,44 +1,38 @@
 <template>
-    <header class="topbar" :class="{ hidden: userStore.isSidebarOpen }">
-      <template v-if="!userStore.isSidebarOpen">
-        <img
-          class="logo"
-          src="@/assets/images/logo.png" alt="Logo" />
-        <span class="title">Добрые лапки</span>
-      </template>
-
-
-      <div class="burger-group">
-        <template v-if="userStore.isSidebarOpen">
-          <span class="title-page">{{ route.meta.title }}</span>
-        </template>
-        <button class="burger">
-          <img
-            :class="userStore.isSidebarOpen ? 'show' : ''"
-            style="padding: 10px;"
-            src="@/assets/images/show.png"
-             @click="toggleSidebar"
-          />
-        </button>
-        <button class="burger" @click="toggleLogout">
-          <img
-            class=""
-            style="padding: 8px;"
-            src="@/assets/images/logout.png"
-             @click="toggleSetting"
-
-          />
-
-        </button>
-        <button class="burger" @click="toggleSetting">
-        <img
-            class=""
-            src="@/assets/images/no-photo.png"
-             @click="toggleSetting"
-          />
-        </button>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-name">
+        <img src="@/assets/images/logo.png" alt="Логотип" class="logo-img">
+        <div class="logo-name-text">
+            <span>Добрые</span>
+            <span>лапки</span>
+        </div>
+        <!-- <router-link to="/login" class="back-button">←</router-link> -->
       </div>
-    </header>
+      <div class="user-controls">
+
+          <i
+            v-if="route.path === '/main'"
+            class='bx bx-cog' @click="toggleSetting"
+          ></i>
+          <i v-else
+           @click="toggleMain"
+          >←</i>
+
+
+
+          <i class='bx bx-exit' @click="toggleLogout"></i>
+          <div class="avatar-preview">
+              <img
+                v-if="userStore.user?.photo"
+                :src="userStore.user?.photo" alt="Аватар">
+              <img
+                v-else
+                src="@/assets/images/avatar_default.png" alt="Аватар">
+          </div>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -50,9 +44,9 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 
-const toggleSidebar = () => {
-  userStore.isSidebarOpen = !userStore.isSidebarOpen
-}
+// const toggleSidebar = () => {
+//   userStore.isSidebarOpen = !userStore.isSidebarOpen
+// }
 
 const toggleSetting = () => {
   if (userStore.user?.role === 'organization') {
@@ -62,6 +56,11 @@ const toggleSetting = () => {
   }
 }
 
+const toggleMain = () => {
+  void router.push({name: 'main'})
+
+}
+
 const toggleLogout = () => {
   localStorage.removeItem('token')
   void router.push('login')
@@ -69,8 +68,6 @@ const toggleLogout = () => {
 </script>
 
 <style scoped lang="scss">
-
-
 .topbar {
   position: fixed;
   top: 0;
@@ -91,6 +88,10 @@ const toggleLogout = () => {
   img{
     width: 34px;
     height: 34px;
+  }
+  img.logo {
+    width: 84px;
+    height: 64px;
   }
   img.show{
     transform: rotate(180deg);

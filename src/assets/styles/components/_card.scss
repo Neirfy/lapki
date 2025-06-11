@@ -1,0 +1,75 @@
+.animals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    width: 100%;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Карточка */
+.product-card {
+    width: 100%;
+    max-width: 280px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+
+    &:hover {
+    transform: translateY(-5px);
+}
+}
+// .product-card
+
+/* Блок изображения */
+.image-block {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center; /* по горизонтали */
+  align-items: center;
+}
+.image-block img {
+    width: auto;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+/* Контент карточки */
+.product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.product-info h2 {
+    font-size: 1.1rem;
+    color: #333;
+    text-align: center;
+}
+.product-info p {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.4;
+}
+
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .animals-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

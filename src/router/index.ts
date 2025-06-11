@@ -4,6 +4,7 @@ import RegistrationLayout from '@/layouts/RegistrationLayout.vue'
 import LoginLayout from '@/layouts/LoginLayout.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { setupRouterGuards } from './guard'
+import SettingLayout from '@/layouts/SettingLayout.vue'
 
 const loginRoutes: RouteRecordRaw[] = [
   {
@@ -32,12 +33,37 @@ const registerRoutes: RouteRecordRaw[] = [
   },
 ]
 
+const mainRoutes: RouteRecordRaw[] = [
+  {
+    path: '/main',
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        name: 'main',
+        component: () => import('@/views/MainView.vue'),
+        meta: {
+          title: 'Животные в приюте'
+        }
+      },
+    ]
+  }
+]
+
 
 const organizationRoutes: RouteRecordRaw[] = [
   {
     path: '/organization',
-    component: MainLayout,
+    component: SettingLayout,
     children: [
+      {
+        path: 'animals/:id',
+        name: 'animal',
+        component: () => import('@/views/animals/user/AnimalView.vue'),
+        meta: {
+          title: 'Информация о животном'
+        },
+      },
       {
         path: 'animals',
         name: 'orgAnimals',
@@ -52,6 +78,14 @@ const organizationRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/settings/OrganizationView.vue'),
         meta: {
           title: 'Управление аккаунтом'
+        }
+      },
+      {
+        path: 'orders',
+        name: 'orgOrders',
+        component: () => import('@/views/animals/organization/OrdersView.vue'),
+        meta: {
+          title: 'Заявки на усыновление'
         }
       },
       {
@@ -70,14 +104,7 @@ const organizationRoutes: RouteRecordRaw[] = [
           title: 'Редактрировать животное'
         }
       },
-      {
-        path: 'orders',
-        name: 'orgOrders',
-        component: () => import('@/views/animals/organization/OrdersView.vue'),
-        meta: {
-          title: 'Заявки на усыновление'
-        }
-      },
+
     ]
   },
 ]
@@ -85,29 +112,23 @@ const organizationRoutes: RouteRecordRaw[] = [
 const userRoutes: RouteRecordRaw[] = [
   {
     path: '/user',
-    component: MainLayout,
-    // name: 'usrSettings',
+    component: SettingLayout,
     children: [
       {
-        path: 'animals',
-        name: 'userAnimals',
-        component: () => import('@/views/animals/user/OrdersView.vue'),
+        path: 'animals/:id',
+        name: 'userAnimal',
+        component: () => import('@/views/animals/user/AnimalView.vue'),
         meta: {
-          title: 'Животные в приюте'
+          title: 'Информация о животном'
         },
       },
-        // children: [
-          {
-
-            path: 'animals:id',
-            name: 'userAnimal',
-            component: () => import('@/views/animals/user/AnimalView.vue'),
-            meta: {
-                title: 'Информация о животном'
-              },
-
-        // ]
-
+      {
+        path: 'requests',
+        name: 'userRequests',
+        component: () => import('@/views/animals/user/RequestsView.vue'),
+        meta: {
+          title: 'Мои заявки'
+        },
       },
       {
         path: 'setting',
@@ -117,15 +138,7 @@ const userRoutes: RouteRecordRaw[] = [
           title: 'Управление аккаунтом'
         }
       },
-      // {
-      //   path: 'setting',
-      //   name: 'userSettings',
-      //   component: () => import('@/views/settings/UserView.vue'),
-      //   meta: {
-      //     title: 'Управление аккаунтом'
-      //   }
-      // },
-    ]
+     ]
   },
 ]
 
@@ -133,8 +146,6 @@ const userRoutes: RouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  // history: createWebHistory(''),
-
   routes: [
     {
       path: '/',
@@ -142,9 +153,9 @@ const router = createRouter({
     },
     ...loginRoutes,
     ...registerRoutes,
+    ...mainRoutes,
     ...organizationRoutes,
     ...userRoutes,
-
   ],
 })
 

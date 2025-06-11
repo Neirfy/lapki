@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useBreedStore } from '@/stores/animals/breeds';
 import { useAnimalFiltersStore } from '@/stores/animals/filter';
+import { useStatusStore } from '@/stores/animals/statuses';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const animalFiltersStore = useAnimalFiltersStore()
 const breedStore = useBreedStore()
+const statusStore = useStatusStore()
 
 
 const toggleOrder = (value: 'asc' | 'desc') => {
@@ -19,49 +21,52 @@ const handleAddAnimal = () => {
 
 onMounted(async () => {
   await breedStore.getBreeds()
+  await statusStore.getStatuses()
 })
 </script>
 
 <template>
-  <div class="top-row">
-    <!-- СЛЕВА — фильтры -->
-    <div class="filter">
-      <div class="buttons-row">
-        <img
-          src="@/assets/images/asc.png"
-          alt="Sort Asc"
-          :class="{ active: animalFiltersStore.order === 'asc' }"
-          @click="toggleOrder('asc')"
-        >
-        <img
-          src="@/assets/images/desc.png"
-          alt="Sort Desc"
-          :class="{ active: animalFiltersStore.order === 'desc' }"
-          @click="toggleOrder('desc')"
-        >
+  <div class="sort-section">
+    <button
+      class="sort-btn"
+      @click="toggleOrder('asc')"
+    >
+      <i class='bx bx-sort-up'></i>
+      По возрастанию
+    </button>
+    <button
+      class="sort-btn"
+      @click="toggleOrder('desc')"
+    >
+      <i class='bx bx-sort-down'></i>
+      По убыванию
+    </button>
 
-        <!-- <select
-          id="type"
-          class="ui-select"
-        >
-          <option>Вид животного</option>
-        </select> -->
 
-        <select
-          id="breed"
-          class="ui-select"
-          v-model="animalFiltersStore.animalFilter.breed"
-          v-if="breedStore.breeds"
-        >
-          <option value="">— Не выбрано —</option>
-          <option v-for="breed in breedStore.breeds" :value="breed.id">
-            {{ breed.name }}
-          </option>
-        </select>
-      </div>
-    </div>
+    <select
+      id="breed"
+      class="sort-btn"
+      v-model="animalFiltersStore.animalFilter.status"
+      v-if="statusStore.statuses"
+    >
 
-    <!-- СПРАВА — кнопка -->
+      <option value="">— Не выбрано —</option>
+      <option v-for="status in statusStore.statuses" :value="status.id">
+        {{ status.name }}
+      </option>
+    </select>
+
+    <select
+      id="breed"
+      class="sort-btn"
+      v-model="animalFiltersStore.animalFilter.breed"
+      v-if="breedStore.breeds"
+    >
+      <option value="">— Не выбрано —</option>
+      <option v-for="breed in breedStore.breeds" :value="breed.id">
+        {{ breed.name }}
+      </option>
+    </select>
     <div class="add-button">
       <button @click="handleAddAnimal">
         Добавить животное
@@ -71,66 +76,3 @@ onMounted(async () => {
 </template>
 
 
-
-<style scoped lang="scss">
-.top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.filter {
-  background-color: #D9F1F9;
-  border-radius: 40px;
-  padding: 20px;
-  box-shadow: 5px 5px 10px #ccc;
-  display: flex;
-  flex-direction: column;
-}
-
-.buttons-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  img {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-
-    &.active {
-      filter: drop-shadow(0 0 4px #6ec5ff);
-      transform: scale(1.2);
-    }
-  }
-
-  select {
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-}
-
-.add-button {
-  background-color: #D9F1F9;
-  border-radius: 40px;
-  padding: 20px;
-  box-shadow: 5px 5px 10px #ccc;
-
-  button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    // background-color: #b3e5fc;
-    color: black;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #81d4fa;
-    }
-  }
-}
-</style>

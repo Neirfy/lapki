@@ -1,5 +1,5 @@
 import { axiosInstance } from "../axios.instance.ts";
-import type { AnimalsInfo, AnimalItemInfo, AnimalFilter, OrderBy, AnimalRequest } from "@/types/animals.ts";
+import type { AnimalsInfo, AnimalItemInfo, AnimalFilter, OrderBy, AnimalRequest, AnimalUserItemInfo } from "@/types/animals.ts";
 import type { PaginationFilter } from "@/types/pagination.ts";
 
 export default {
@@ -30,6 +30,12 @@ export default {
   },
   createAnimal(data: AnimalRequest): Promise<AnimalItemInfo> {
     return axiosInstance.post<AnimalItemInfo>(`/animals/create`, data);
+  },
+  editAnimal(animal_id: string, data: AnimalRequest): Promise<AnimalItemInfo> {
+    return axiosInstance.put<AnimalItemInfo>(`/animals/${animal_id}`, data);
+  },
+  getAnimalUser(uuid: string): Promise<AnimalUserItemInfo> {
+    return axiosInstance.get<AnimalUserItemInfo>(`/animals/${uuid}/user`);
   },
 
 };

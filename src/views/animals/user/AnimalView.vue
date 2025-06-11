@@ -1,24 +1,56 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import { useAnimalStore } from '@/stores/animals/animal';
+import { useAnimalUserStore } from '@/stores/animals/animal.user';
 import Loader from '@/components/Loader.vue';
 
 import { useRoute, useRouter } from 'vue-router';
 import { useBreedStore } from '@/stores/animals/breeds';
 import { useStatusStore } from '@/stores/animals/statuses';
+import Modal from '@/components/popup/Modal.vue';
 
 const route = useRoute()
 const router = useRouter()
 const uuid = route.params.id as string;
-const animalStore = useAnimalStore()
+const animalStore = useAnimalUserStore()
 const breedStore = useBreedStore()
 const statusStore = useStatusStore()
 
-
-const handleRequest = async () => {
-  await animalStore.createRequest()
-  router.push({name: 'orders'})
+const showConfirmModal = ref(false)
+const handleRequest =() =>{
+    showConfirmModal.value = true
 }
+
+const confirmRequest= async () => {
+  showConfirmModal.value = false
+  try {
+    await animalStore.createRequest()
+  router.push({name: 'main'})
+  } catch (e) {
+    console.error('Ошибка при сохранении', e)
+  }
+}
+
+const cancelRequest = () => {
+  showConfirmModal.value = false
+}
+
+const handleOpenSocial = (type: 'vk' | 'tg') => {
+  const url = ref("")
+  if (type === 'vk') {
+    url.value = `https://${animalStore.animal?.organization.vk}`
+  } else if (type === 'tg') {
+    url.value = `https://${animalStore.animal?.organization.tg}`
+  }
+
+  if (url) {
+    window.open(url.value, '_blank')
+  }
+}
+
+// const handleRequest = async () => {
+//   await animalStore.createRequest()
+//   router.push({name: 'main'})
+// }
 
 onMounted(async () => {
   await breedStore.getBreeds()
@@ -32,57 +64,103 @@ onUnmounted(()=>{
 </script>
 
 <template>
-  <section >
-    <Loader v-if="animalStore.isLoading" />
-    <template v-else>
-      <div
-        v-if="animalStore.animal"
-        class="profile-section">
-        <div class="avatar-block">
-          <img
-            v-if="animalStore.animal.photo"
-            :src="animalStore.animal.photo"
-            alt="Фото животного"
-          />
-          <img
-            v-else
-            class="skeleton"
-            src="@/assets/images/no-photo.png"
-            alt="Нет фото"
+    <Loader v-show="animalStore.isLoading" />
+      <div class="animal-organization-wrapper">
+        <div class="animal-wrapper">
+          <div class="avatar-setting">
+            <img
+              v-if="animalStore.animal?.photo"
+              :src="animalStore.animal.photo"
+              alt="Фото животного"
+            />
+            <img
+              v-else
+              class="skeleton"
+              src="@/assets/images/no-photo.png"
+              alt="Нет фото"
 
-          />
+            />
+          </div>
 
+          <div class="info-section">
+            <label>Имя животного: </label>
+            <span>
+              {{ animalStore.animal?.name }}
+            </span>
+            <label class="" for="breed">Порода: </label>
+            <span>
+              {{ breedStore.selected?.name }}
+            </span>
+            <label>Возраст:</label>
+            <span>
+               {{ animalStore.animal?.age }}
+            </span>
+          </div>
+
+          <div class="info-section full-width-row">
+            <label>История животного:</label>
+            <textarea>{{animalStore.animal?.description}}</textarea>
+          </div>
+          <button
+          v-if="animalStore.animal"
+          class="btn "
+          @click="handleRequest"
+          >
+          Подать заявку
+        </button >
         </div>
-        <div class="info-card">
-          <h1>
-          <label>Имя животного: </label>
-          <span>
-            {{ animalStore.animal.name }}
-          </span>
-          </h1>
-          <label class="" for="breed">Порода: {{ breedStore.selected?.name }}</label>
-          <label>Возраст: {{ animalStore.animal.age }}</label>
+        <div class="organization-wrapper">
+
+          <div class="info-section-org">
+            <div class="avatar-setting small">
+            <img
+              v-if="animalStore.animal?.photo"
+              :src="animalStore.animal.photo"
+              alt="Фото животного"
+            />
+            <img
+              v-else
+              class="skeleton2"
+              src="@/assets/images/no-photo.png"
+              alt="Нет фото"
+
+            />
+          </div>
+            <label>
+              Название приюта
+            </label>
+            <span>
+              {{ animalStore.animal?.organization.name }}
+            </span>
+            <label>Адрес</label>
+            <span>
+              {{ animalStore.animal?.organization.address }}
+            </span>
+            <label>Контактные номера:</label>
+            <span>
+              {{ animalStore.animal?.organization.phone1 }}
+            </span>
+            <span>
+              {{ animalStore.animal?.organization.phone2 }}
+            </span>
+            <label>Соц-сети:</label>
+            <span>
+              <img v-if="animalStore.animal?.organization.vk" src="@/assets/images/vk.png" alt="VK" @click="handleOpenSocial('vk')" />
+              <img v-if="animalStore.animal?.organization.tg" src="@/assets/images/tg.png" alt="Telegram" @click="handleOpenSocial('tg')" />
+
+            </span>
+          </div>
         </div>
 
-        <div class="info-card full-width">
-          <label>История животного:</label>
-          <span>{{animalStore.animal.description}}</span>
-        </div>
 
+        <Modal
+        :show="showConfirmModal"
+        message="Вы уверены, что хотите подать заявку на усыновление живогного?"
+        @confirm="confirmRequest"
+        @cancel="cancelRequest"/>
       </div>
-      <div         class="profile-section">
-        </div>
-      <button
-        v-if="animalStore.animal"
-        class="btn "
-        @click="handleRequest"
-        >
-        Подать заявку
-      </button >
-    </template>
-  </section>
 </template>
-
+<!--
 <style scoped lang="scss">
 .changeme{
   cursor: pointer;
@@ -130,11 +208,33 @@ nav li.active {
   align-items: center;
 }
 
+.profile {
+  // background: #e0e0e0;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  margin-top: 20px;
+  border-radius: 40px;
+  padding: 20px;
+}
+
 .profile-section {
   background: #e0e0e0;
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: auto auto;
+  gap: 20px;
+  margin-top: 20px;
+  border-radius: 40px;
+  padding: 20px;
+}
+
+.profile-organization {
+  background: #e0e0e0;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr;
+  // grid-template-rows: auto auto;
   gap: 20px;
   margin-top: 20px;
   border-radius: 40px;
@@ -166,7 +266,15 @@ nav li.active {
   img.skeleton {
     background-color: white;
   }
+  // img.
 }
+.skeleton2 {
+    padding: 40px;
+    width: 30px;
+    height: 30px;
+      border-radius: 40px;
+    background-color: white;
+  }
 
 .avatar-placeholder {
   width: 100px;
@@ -224,4 +332,4 @@ textarea {
   border-radius: 5px;
 }
 </style>
-
+ -->

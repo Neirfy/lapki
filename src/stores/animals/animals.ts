@@ -5,12 +5,13 @@ import type { AnimalItemInfo } from '@/types/animals';
 import { usePaginationStore } from '../pagination';
 import { useAnimalFiltersStore } from './filter';
 import { useUserStore } from '../users/user';
+import type { PaginationFilter } from '@/types/pagination';
 
 export const useAnimalsStore = defineStore('animals', () => {
   const animals = ref<AnimalItemInfo[]>([]);
   const isLoading = ref(false);
 
-  const pagination = usePaginationStore();
+  const paginationStore = usePaginationStore();
   const filter = useAnimalFiltersStore();
   const userStore = useUserStore()
 
@@ -18,9 +19,13 @@ export const useAnimalsStore = defineStore('animals', () => {
     isLoading.value = true;
     try {
       animals.value.splice(0)
-      console.log(filter.animalFilter)
-      const response = await animalApi.getAnimals(pagination.pagination, filter.animalFilter, filter.order)
+      const pagination: PaginationFilter = {
+        page: paginationStore.pagination.page,
+        per_page: paginationStore.pagination.per_page
+      }
+      const response = await animalApi.getAnimals(pagination, filter.animalFilter, filter.order)
       animals.value = response.items
+      paginationStore.pagination = response.pagination
     } catch (error) {
       console.log(error);
     } finally {
@@ -34,7 +39,14 @@ export const useAnimalsStore = defineStore('animals', () => {
     },
   );
 
-  watch(() => filter.animalFilter.breed, () => {
+  watch(
+  () => paginationStore.pagination.page,
+  async () => {
+    await getAnimals();
+  }
+);
+
+  watch(() => filter.animalFilter, () => {
     if (userStore.user?.role === 'organization') {
       getAnimals();
     }

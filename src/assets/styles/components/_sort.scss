@@ -1,0 +1,26 @@
+.sort-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    padding-left: 0;
+}
+
+.sort-btn {
+    padding: 15px 25px;
+    border-radius: 20px;
+    border: none;
+    background-color: #B2E2F2;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.sort-btn:hover {
+    background-color: #9bd1e8;
+    transform: translateY(-2px);
+}
