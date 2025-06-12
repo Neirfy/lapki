@@ -110,8 +110,8 @@ onUnmounted(()=>{
           <div class="info-section-org">
             <div class="avatar-setting small">
             <img
-              v-if="animalStore.animal?.photo"
-              :src="animalStore.animal.photo"
+              v-if="animalStore.animal?.organization.photo"
+              :src="animalStore.animal.organization.photo"
               alt="Фото животного"
             />
             <img
