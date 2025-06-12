@@ -2,13 +2,17 @@
 <script setup lang="ts">
 // import Filter from '@/components/animals/Filter.vue';
 import SortOrganizationFilter from '@/components/animals/SortOrganizationFilter.vue';
-import Card from '@/components/animals/Card.vue';
+import EditCard from '@/components/animals/EditCard.vue';
+import Pagination from '@/components/Pagination.vue';
+
 </script>
 
 <template>
     <div class="main-content">
       <SortOrganizationFilter></SortOrganizationFilter>
-      <Card />
+      <EditCard />
+      <Pagination />
+
     </div>
 </template>
 

@@ -35,11 +35,7 @@ export const useAnimalUserStore = defineStore('animalUser', () => {
     try {
       if (userStore.user && animal.value) {
         const respone = await requestApi.createRequest(animal.value?.id)
-        // animalEdit.value.id_user = userStore.user.id
-        // if (breedStore.selected?.id && statusStore.selected?.id ) {
-        //   animalEdit.value.id_breed = breedStore.selected.id
-        //   await animalsApi.createAnimal(animalEdit.value)
-        // }
+        console.log(respone)
       }
     } catch (error) {
       console.log(error);

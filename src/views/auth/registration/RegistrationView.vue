@@ -12,7 +12,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="registration-wrapper">
     <h2 class="registration-title">Регистрация</h2>
       <div class="role-selector">
         <label class="role-label">Роль:</label>

@@ -24,7 +24,7 @@ onMounted(() => {
 
     menus.value = [
       { title: 'Управление аккаунтом', icon: 'bx bx-user-circle', route: '/user/setting' },
-      { title: 'Заявки на усыновление', icon: 'bx bx-task', route: '/user/requests' },
+      { title: 'Мои заявки', icon: 'bx bx-task', route: '/user/requests' },
       // { title: 'Мои заявки', icon: '🐾', route: '/user/requests' },
     ]
   }

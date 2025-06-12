@@ -72,7 +72,7 @@ const handleRegistration = async () => {
       class="register-btn"
       @click="handleRegistration"
     >
-      Зарегестрироваться
+      Зарегистрироваться
     </button >
     </form>
   </section>

@@ -11,7 +11,7 @@ const animalsStore = useAnimalsStore()
 
 const router = useRouter()
 
-const handleEditAnimal = async (id: string) => {
+const handleShowAnimal = async (id: string) => {
   if (userStore.user?.role === 'organization'){
     await router.push({ name: 'animal', params: { id: id } })
   } else {
@@ -37,7 +37,7 @@ onMounted(async () =>{
     >
       <div class="product-card"
 
-        @click="handleEditAnimal(i.id)"
+        @click="handleShowAnimal(i.id)"
       >
 
         <div class="image-block">

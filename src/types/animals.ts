@@ -26,6 +26,7 @@ type Organization = {
   id: string
   name: string
   address: string
+  photo: string
   phone1: string
   phone2: string
   vk: string

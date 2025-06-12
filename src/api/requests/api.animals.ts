@@ -25,6 +25,31 @@ export default {
 
     return axiosInstance.get<AnimalsInfo>(`animals/all?${params.toString()}`);
   },
+  getAnimalsOrganization(
+    org_id: string,
+    pag: PaginationFilter,
+    filter: AnimalFilter,
+    order?: OrderBy
+  ): Promise<AnimalsInfo> {
+    const params = new URLSearchParams();
+
+    // Пагинация
+    if (pag.page != null) params.append("page", pag.page.toString());
+    if (pag.per_page != null) params.append("per_page", pag.per_page.toString());
+
+    // Фильтры
+    if (filter.status) params.append("status", filter.status);
+    if (filter.breed) params.append("breed", filter.breed);
+    if (filter.organization) params.append("organization", filter.organization);
+    if (filter.age != null) params.append("age", filter.age.toString());
+
+    // Сортировка
+    if (order) params.append("order", order);
+
+    return axiosInstance.get<AnimalsInfo>(`animals/${org_id}/all?${params.toString()}`);
+  },
+
+
   getAnimal(uuid: string): Promise<AnimalItemInfo> {
     return axiosInstance.get<AnimalItemInfo>(`/animals/${uuid}`);
   },
