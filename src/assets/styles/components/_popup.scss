@@ -1,81 +1,81 @@
-.popup {
-    display: none; /* JS покажет display: block */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    z-index: 1001;
-    width: 90%;
-    max-width: 500px;
-}
+// .popup {
+//     display: none; /* JS покажет display: block */
+//     position: fixed;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: #fff;
+//     padding: 30px 40px;
+//     border-radius: 20px;
+//     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+//     z-index: 1001;
+//     width: 90%;
+//     max-width: 500px;
+// }
 
-/* Контент всплывающего окна */
-.popup-content {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    max-width: 400px;
-    width: 100%;
-}
+// /* Контент всплывающего окна */
+// .popup-content {
+//     background-color: #ffffff;
+//     padding: 30px 40px;
+//     text-align: center;
+//     align-items: center;
+//     justify-content: center;
+//     max-width: 400px;
+//     width: 100%;
+// }
 
-.popup-content h3 {
-    margin-bottom: 20px;
-    font-size: 22px;
-    color: #333;
-}
+// .popup-content h3 {
+//     margin-bottom: 20px;
+//     font-size: 22px;
+//     color: #333;
+// }
 
-/* Инпут */
-.popup-content input[type="text"] {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid #B2E2F2;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
+// /* Инпут */
+// .popup-content input[type="text"] {
+//     width: 100%;
+//     padding: 10px 15px;
+//     font-size: 16px;
+//     border: 2px solid #B2E2F2;
+//     border-radius: 10px;
+//     margin-bottom: 20px;
+//     outline: none;
+//     transition: border-color 0.3s ease;
+// }
 
-.popup-content input[type="text"]:focus {
-    border-color: #FF6F61;
-}
+// .popup-content input[type="text"]:focus {
+//     border-color: #FF6F61;
+// }
 
-/* Кнопки внутри попапа */
-.popup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
+// /* Кнопки внутри попапа */
+// .popup-buttons {
+//     display: flex;
+//     justify-content: center;
+//     gap: 15px;
+// }
 
-.popup-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+// .popup-buttons button {
+//     padding: 10px 20px;
+//     font-size: 16px;
+//     border-radius: 12px;
+//     border: none;
+//     cursor: pointer;
+//     transition: background-color 0.3s ease;
+// }
 
-.popup-buttons button:first-child {
-    background-color: #FF6F61;
-    color: white;
-}
+// .popup-buttons button:first-child {
+//     background-color: #FF6F61;
+//     color: white;
+// }
 
-.popup-buttons button:first-child:hover {
-    background-color: #e65c50;
-}
+// .popup-buttons button:first-child:hover {
+//     background-color: #e65c50;
+// }
 
-.popup-buttons button:last-child {
-    background-color: #B2E2F2;
-    color: black;
-}
+// .popup-buttons button:last-child {
+//     background-color: #B2E2F2;
+//     color: black;
+// }
 
-.popup-buttons button:last-child:hover {
-    background-color: #9bd1e8;
-}
+// .popup-buttons button:last-child:hover {
+//     background-color: #9bd1e8;
+// }

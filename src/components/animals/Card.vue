@@ -25,11 +25,11 @@ onMounted(async () =>{
 
 </script>
 <template>
-<div v-if="animalsStore.isLoading">
-    <Loader />
-  </div>
+<!-- <div v-show="animalsStore.isLoading"> -->
+<!-- </div> -->
 
-  <div v-else class="animals-grid">
+<div class="animals-grid">
+    <Loader v-show="animalsStore.isLoading"/>
     <div
       class="card-container"
       v-if="animalsStore.animals"

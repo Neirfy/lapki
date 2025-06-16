@@ -57,11 +57,6 @@ const cancelSave = () => {
   showConfirmModal.value = false
 }
 
-// const handleRegistration = async () => {
-//   console.log(editAnimalStore.animalEdit)
-//   await editAnimalStore.editAnimal()
-//   router.push({name: 'orders'})
-// }
 
 onMounted(async () => {
   editAnimalStore.uuid = uuid
@@ -165,6 +160,7 @@ onMounted(async () => {
       Опубликовать
     </button >
     </div>
+
     <Modal
       :show="showConfirmModal"
       message="Вы уверены, что хотите сохранить изменения?"

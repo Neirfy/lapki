@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HeaderBar from '@/components/navbars/HeaderBar.vue'
-import SideBar from '@/components/navbars/SideBar.vue'
+// import SideBar from '@/components/navbars/SideBar.vue'
 import { useUserStore } from '@/stores/users/user'
 // import { ref } from 'vue'
 const userStore = useUserStore()
@@ -8,9 +8,11 @@ const userStore = useUserStore()
 <template>
   <div>
 
-    <HeaderBar>
-    </HeaderBar>
+
     <!-- <SideBar /> -->
+    <HeaderBar />
+        <!-- <main class="main-area" > -->
+
     <main class="content-wrapper" :class="{ open: userStore.isSidebarOpen }">
       <RouterView/>
     </main>

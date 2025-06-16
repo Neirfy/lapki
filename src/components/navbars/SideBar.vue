@@ -25,7 +25,6 @@ onMounted(() => {
     menus.value = [
       { title: 'Управление аккаунтом', icon: 'bx bx-user-circle', route: '/user/setting' },
       { title: 'Мои заявки', icon: 'bx bx-task', route: '/user/requests' },
-      // { title: 'Мои заявки', icon: '🐾', route: '/user/requests' },
     ]
   }
 })
@@ -42,18 +41,14 @@ onMounted(() => {
       </div>
     </div>
     <nav class="sidebar-nav">
-      <!-- <div
+      <router-link
+        active-class="nav-active"
         class="nav-btn left-sidebar-btn"
+        :to="menuItem.route"
         v-for="menuItem in menus"
-      > -->
-        <router-link
-          active-class="nav-active"
-          class="nav-btn left-sidebar-btn"
-          :to="menuItem.route"
-          v-for="menuItem in menus"
-        >
-          <i :class="menuItem.icon"></i>{{ menuItem.title }}
-        </router-link>
+      >
+        <i :class="menuItem.icon"></i>{{ menuItem.title }}
+      </router-link>
     </nav>
   </div>
 </template>

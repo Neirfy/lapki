@@ -25,13 +25,6 @@ const handleLogin = async () => {
       localStorage.setItem('token', response.access_token)
       await userStore.getUser();
       void router.push({ name: 'main' })
-
-      // if (userStore.user?.role == 'user'){
-      //   void router.push({ name: 'userAnimals' })
-      // } else if (userStore.user?.role == 'organization'){
-      //   void router.push({ name: 'orgAnimals' })
-      // }
-
     }
   } catch (err) {
     console.error('Login failed:', err);
@@ -46,14 +39,7 @@ const handleRegistration = () => {
 </script>
 
 <template>
-  <!-- <div v-if="isLoading">
-    <Loader></Loader>
-  </div> -->
   <div class="login-wrapper">
-    <!-- <img class="img-left" src="@/assets/images/leftLogo.png" alt="Left Image" />
-    <img class="img-right" src="@/assets/images/rightLogo.png" alt="Right Image" /> -->
-
-    <!-- <div class="card"> -->
       <div class="login">
         <div class="logo-name">
           <img src="@/assets/images/logo.png" alt="">
@@ -68,7 +54,6 @@ const handleRegistration = () => {
               v-model="loginData.username"
               id="login"
               type="text" placeholder="Введите логин" required>
-            <!-- <i class='bx bxs-user'></i> -->
         </div>
         <h1>Пароль:</h1>
 
@@ -96,59 +81,6 @@ const handleRegistration = () => {
   </div>
 </template>
 
-<!--
-<style scoped lang="scss">
+<style>
 
-.container1 {
-  position: relative;
-  /* margin: 0; */
-  /* padding: 0; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-    background-color: #B2E2F2;
-
-}
-
-.card {
-  position: fixed;
-  width: 500px;
-  height: 760px;
-  padding: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #8ACFE6FA;
-  border-radius: 32px;
-  /* padding: 1rem; */
-  gap: 1rem;
-  z-index: 1;
-}
-
-.img-left,
-.img-right {
-  position: fixed;
-  top: 0;
-  height: 100%;
-  z-index: 0;
-}
-
-.img-left {
-  left: 0;
-}
-
-.img-right {
-  right: 0;
-}
-
-.content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-</style> -->
+</style>

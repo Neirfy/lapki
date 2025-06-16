@@ -10,9 +10,9 @@ export const useCreateUserStore = defineStore('userCreate', () => {
     name: "",
     surname: "",
     patronymic: "",
-    id_role: undefined,
-    address: undefined,
-    email: undefined,
+    id_role: "",
+    address: "",
+    email: "",
     password: "",
   });
   const isLoading = ref(false);

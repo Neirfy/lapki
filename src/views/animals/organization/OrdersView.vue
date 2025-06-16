@@ -104,6 +104,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 2fr 2fr 1fr; // юзер и животное по 2 части, статус — 1 часть
   align-items: center;
+  margin-top: 10px;
   gap: 12px;
   padding: 8px;
   border: 1px solid black;

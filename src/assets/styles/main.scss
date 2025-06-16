@@ -1,20 +1,21 @@
-@import "variables/_colors";
-@import "foundation/_font";
+@use "foundation/_font";
+@use "variables/_colors";
+@use "foundation/base.scss";
 
-@import "foundation/base";
-@import "layout/_wrappers";
-@import "components/_login";
+@use "layout/_wrappers";
+@use "components/_login";
 
-@import "components/_card";
-@import "components/_header";
-@import "components/_navbar";
-@import "components/_settings";
+@use "components/_modal";
+@use "components/_card";
+@use "components/_settings";
+@use "components/_header";
+@use "components/_navbar";
 
-@import "components/_filter";
-@import "components/_sort";
-@import "components/_pagination";
-@import "components/_registration";
-@import "components/_popup";
+@use "components/_filter";
+@use "components/_sort";
+@use "components/_pagination";
+@use "components/_registration";
+@use "components/_popup";
 
 
 

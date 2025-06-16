@@ -1,13 +1,16 @@
+@use '../variables/_colors' as color;
+@use '../foundation/_font' as font;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: $font-family;
+    font-family: font.$font-family;
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: white;
+    background: color.$color-white;
 }
