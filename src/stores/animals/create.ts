@@ -7,6 +7,7 @@ import { useUserStore } from '@/stores/users/user';
 import { useBreedStore } from '@/stores/animals/breeds';
 import { useStatusStore } from '@/stores/animals/statuses';
 import type { AnimalRequest} from '@/types/animals';
+import { useTypeStore } from './animal.types';
 
 
 export const useAnimalCreateStore = defineStore('animalCreate', () => {
@@ -18,11 +19,13 @@ export const useAnimalCreateStore = defineStore('animalCreate', () => {
     id_status: "",
     id_breed: "",
     id_user: "",
+    id_type: "",
   });
   const isLoading = ref(false);
   const userStore = useUserStore();
   const breedStore = useBreedStore();
   const statusStore = useStatusStore();
+  const typeStore = useTypeStore()
 
 
   const createAnimal = async () => {
@@ -33,6 +36,7 @@ export const useAnimalCreateStore = defineStore('animalCreate', () => {
           if (breedStore.selected && statusStore.selected) {
             animalCreate.value.id_breed = breedStore.selected.id ?? ""
             animalCreate.value.id_status = statusStore.selected?.id ?? ""
+            animalCreate.value.id_type = typeStore.selected?.id ?? ""
           }
           await animalsApi.createAnimal(animalCreate.value)
         }

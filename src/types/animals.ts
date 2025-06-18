@@ -1,6 +1,7 @@
 import type { BreedInfo } from "./breeds"
 import type { PaginationInfo } from "./pagination"
 import type { StatusInfo } from "./statuses"
+import type { AnimalTypeInfo } from "./types"
 
 export type AnimalCreate = {
   photo: string
@@ -20,6 +21,7 @@ export type AnimalItemInfo = {
   breed: BreedInfo
   description?: string
   status: StatusInfo
+  type: AnimalTypeInfo
 }
 
 type Organization = {
@@ -48,6 +50,7 @@ export type OrderBy = "asc" | "desc" | undefined
 
 export type AnimalFilter = {
   status: string
+  type: string
   breed: string
   organization: string
   age?: number | null
@@ -61,4 +64,5 @@ export type AnimalRequest ={
   id_status: string
   id_breed: string
   id_user: string
+  id_type: string
 }

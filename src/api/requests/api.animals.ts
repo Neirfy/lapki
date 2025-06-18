@@ -16,6 +16,7 @@ export default {
 
     // Фильтры
     if (filter.status) params.append("status", filter.status);
+    if (filter.type) params.append("type", filter.type);
     if (filter.breed) params.append("breed", filter.breed);
     if (filter.organization) params.append("organization", filter.organization);
     if (filter.age != null) params.append("age", filter.age.toString());
@@ -39,6 +40,7 @@ export default {
 
     // Фильтры
     if (filter.status) params.append("status", filter.status);
+    if (filter.type) params.append("type", filter.type);
     if (filter.breed) params.append("breed", filter.breed);
     if (filter.organization) params.append("organization", filter.organization);
     if (filter.age != null) params.append("age", filter.age.toString());

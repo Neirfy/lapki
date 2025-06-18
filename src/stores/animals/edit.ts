@@ -19,6 +19,7 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
     id_status: "",
     id_breed: "",
     id_user: "",
+    id_type: "",
   });
   const uuid = ref("");
   const isLoading = ref(false);
@@ -39,6 +40,7 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
           id_status: response.status.id ?? "",
           id_breed: response.breed.id ?? "",
           id_user: "",
+          id_type: response.breed.id ?? "",
         }
       )
     } catch (error) {

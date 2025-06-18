@@ -6,6 +6,7 @@ import { useBreedStore } from '@/stores/animals/breeds';
 import { useStatusStore } from '@/stores/animals/statuses';
 import Loader from '@/components/Loader.vue';
 import Modal from '@/components/popup/Modal.vue';
+import { useTypeStore } from '@/stores/animals/animal.types';
 
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -15,6 +16,7 @@ const uuid = route.params.id as string;
 const editAnimalStore = useAnimalEditStore()
 const breedStore = useBreedStore()
 const statusStore = useStatusStore()
+const typeStore = useTypeStore()
 const showConfirmModal = ref(false)
 const isEdit  = ref(false)
 
@@ -62,6 +64,7 @@ onMounted(async () => {
   editAnimalStore.uuid = uuid
   await breedStore.getBreeds()
   await statusStore.getStatuses()
+  await typeStore.getTypes()
   await editAnimalStore.getAnimal()
 })
 </script>
@@ -107,6 +110,21 @@ onMounted(async () => {
       type="text" />
       <span v-else>
         {{ editAnimalStore.animalEdit.name }}
+      </span>
+
+      <label class="" for="type">Вид:</label>
+      <select
+        v-if="isEdit"
+        id="type"
+        v-model="editAnimalStore.animalEdit.id_type"
+      >
+        <option v-for="type in typeStore.types" :value="type.id">
+          {{ type.name }}
+        </option>
+
+      </select>
+      <span v-else>
+        {{     typeStore.types.find(b => b.id === editAnimalStore.animalEdit.id_type)?.name || '—' }}
       </span>
 
       <label class="" for="breed">Порода:</label>

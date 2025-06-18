@@ -5,18 +5,22 @@ import { useStatusStore } from '@/stores/animals/statuses'
 import { useAnimalFiltersStore } from '@/stores/animals/filter'
 import { useAnimalsStore } from '@/stores/animals/animals';
 import { useOrganizationStore } from '@/stores/animals/organizations';
+import { useTypeStore } from '@/stores/animals/animal.types';
+import { useUserStore } from '@/stores/users/user';
 
+const userStore = useUserStore()
 const animalsStore = useAnimalsStore()
 const breedStore = useBreedStore()
 const statusStore = useStatusStore()
 const animalFiltersStore = useAnimalFiltersStore()
 const organizationStore = useOrganizationStore()
-
+const typeStore = useTypeStore()
 
 onMounted(async () => {
   await breedStore.getBreeds()
   await statusStore.getStatuses()
   await organizationStore.getOrganizations()
+  await typeStore.getTypes()
 })
 </script>
 
@@ -36,9 +40,23 @@ onMounted(async () => {
           <!-- @update:modelValue="(val) => {animalFiltersStore.animalFilter.age = val === '' ? null : Number(val)}" -->
         </div>
         <div class="filter-dropdown">
-          <label class="lbl color-black" for="organization">Порода</label>
+          <label for="type">Вид животного:</label>
+          <select
+            id="type"
+            class="sort-btn"
+            v-model="animalFiltersStore.animalFilter.type"
+            v-if="typeStore.types"
+          >
+            <option value="">— Не выбрано —</option>
+            <option v-for="type in typeStore.types" :value="type.id">
+              {{ type.name }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <label class="lbl color-black" for="breed">Порода</label>
             <select
-              id="organization"
+              id="breed"
               v-model="animalFiltersStore.animalFilter.breed"
               class="ui-select"
               v-if="breedStore.breeds"
@@ -59,7 +77,6 @@ onMounted(async () => {
             v-if="breedStore.breeds"
           >
             <option value="">— Не выбрано —</option>
-
             <option v-for="organization in organizationStore.organizations" :value="organization.id">
               {{ organization.name }}
             </option>
@@ -79,6 +96,7 @@ onMounted(async () => {
             </option>
           </select>
           <button
+            v-if="userStore.user?.role === 'user'"
             class="btn"
             @click="animalsStore.getAnimals"
           >

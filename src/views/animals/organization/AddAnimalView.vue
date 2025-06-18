@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 import { useBreedStore } from '@/stores/animals/breeds';
 import { useStatusStore } from '@/stores/animals/statuses';
 import Modal from '@/components/popup/Modal.vue';
+import { useTypeStore } from '@/stores/animals/animal.types';
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -15,7 +16,9 @@ const router =useRouter()
 const createAnimalStore = useAnimalCreateStore()
 const breedStore = useBreedStore()
 const statusStore = useStatusStore()
+const typeStore = useTypeStore()
 const showConfirmModal = ref(false)
+
 const triggerFileInput = () => {
   fileInput.value?.click()
 }
@@ -63,6 +66,7 @@ const cancelSave = () => {
 onMounted(async () => {
   await breedStore.getBreeds()
   await statusStore.getStatuses()
+  await typeStore.getTypes()
 })
 </script>
 
@@ -104,6 +108,18 @@ onMounted(async () => {
       <input
         v-model="createAnimalStore.animalCreate.name"
         type="text" />
+
+      <label class="" for="type">Вид:</label>
+      <select
+        id="type"
+        v-model="createAnimalStore.animalCreate.id_type"
+        v-if="breedStore.breeds"
+      >
+        <option v-for="type in typeStore.types" :value="type.id">
+          {{ type.name }}
+        </option>
+      </select>
+
 
       <label class="" for="breed">Порода:</label>
       <select
@@ -150,7 +166,7 @@ onMounted(async () => {
 
     <Modal
       :show="showConfirmModal"
-      message="Вы уверены, что хотите длбавить животное"
+      message="Вы уверены, что хотите добавить животное"
       @confirm="confirmSave"
       @cancel="cancelSave"/>
   </div>

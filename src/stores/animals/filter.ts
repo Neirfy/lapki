@@ -6,6 +6,7 @@ export const useAnimalFiltersStore = defineStore('animalFilter', () => {
   const animalFilter = reactive<AnimalFilter>({
     status: "",
     breed: "",
+    type: "",
     organization: "",
     age: null
   });

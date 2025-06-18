@@ -83,8 +83,12 @@ onUnmounted(()=>{
             <span>
               {{ animalStore.animal?.name }}
             </span>
-            <label class="" for="breed">Порода: </label>
+            <label>Вид животного: </label>
             <span>
+              {{ animalStore.animal?.type ?? 'Не указано'}}
+            </span>
+            <label for="breed">Порода: </label>
+            <span id="breed">
               {{ breedStore.selected?.name }}
             </span>
             <label>Возраст:</label>
