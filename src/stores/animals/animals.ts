@@ -46,11 +46,11 @@ export const useAnimalsStore = defineStore('animals', () => {
   }
 );
 
-  watch(() => filter.animalFilter, () => {
-    if (userStore.user?.role === 'organization') {
-      getAnimals();
-    }
-  }, { deep: true });
+  // watch(() => filter.animalFilter, () => {
+  //   if (userStore.user?.role === 'organization') {
+  //     getAnimals();
+  //   }
+  // }, { deep: true });
 
   return {
     animals,

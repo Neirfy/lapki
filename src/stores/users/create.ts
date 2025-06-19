@@ -38,6 +38,7 @@ export const useCreateUserStore = defineStore('userCreate', () => {
         user.value.id_role = roleStore.roles[1].id
       // }
       console.log()
+      
       const response = await userApi.createUser(user.value)
       console.log(response)
       // user.value = response

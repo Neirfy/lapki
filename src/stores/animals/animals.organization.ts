@@ -49,10 +49,7 @@ export const useAnimalsOrganizationStore = defineStore('animalsOrganization', ()
 );
 
   watch(() => filter.animalFilter, () => {
-    
-    if (userStore.user?.role === 'organization') {
       getAnimals();
-    }
   }, { deep: true });
 
   return {

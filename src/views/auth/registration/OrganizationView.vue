@@ -5,40 +5,43 @@ import { useRouter } from 'vue-router';
 
 const router =useRouter()
 const createUserStore = useCreateUserStore()
-const fields = [
+
+type UserField = keyof typeof createUserStore.user;
+
+const fields: { name: UserField; title: string; type: string; required: boolean }[] = [
   {
     name: "name",
     title: "Название:",
     type: "text",
-    model: createUserStore.user.name,
+    // model: createUserStore.user.name,
     required: true
   },
   {
     name: "address",
     title: "Адрес:",
     type: "text",
-    model: createUserStore.user.address,
+    // model: createUserStore.user.address,
     required: true
   },
   {
     name: "email",
     title: "Почта:",
     type: "text",
-    model: createUserStore.user.email,
+    // model: createUserStore.user.email,
     required: true
   },
   {
     name: "username",
     title: "Логин:",
     type: "text",
-    model: createUserStore.user.username,
+    // model: createUserStore.user.username,
     required: true
   },
   {
     name: "password",
     title: "Пароль:",
     type: "password",
-    model: createUserStore.user.password,
+    // model: createUserStore.user.password,
     required: true
   },
 ]
@@ -48,7 +51,8 @@ const fields = [
 
 const handleRegistration = async () => {
   for (const field of fields) {
-    if (field.required && !field.model) {
+    if (field.required && !createUserStore.user[field.name]) {
+      console.warn(`Поле "${field.name}" не заполнено`)
       return
     }
   }
@@ -66,7 +70,7 @@ const handleRegistration = async () => {
         </label>
         <input
           :id="field.name"
-          v-model="field.model"
+          v-model="createUserStore.user[field.name]"
           :name="field.name"
           :type="field.type"
           :required="field.required"
@@ -75,8 +79,10 @@ const handleRegistration = async () => {
       </div>
       <button
         class="register-btn"
-        @click="handleRegistration"
-      >
+        type="submit"
+
+        >
+        <!-- @click="handleRegistration" -->
         Зарегистрироваться
       </button>
     </form>

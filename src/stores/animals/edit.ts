@@ -40,7 +40,7 @@ export const useAnimalEditStore = defineStore('animalEdit', () => {
           id_status: response.status.id ?? "",
           id_breed: response.breed.id ?? "",
           id_user: "",
-          id_type: response.breed.id ?? "",
+          id_type: response.type.id ?? "",
         }
       )
     } catch (error) {

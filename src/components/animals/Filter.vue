@@ -95,8 +95,8 @@ onMounted(async () => {
               {{ status.name }}
             </option>
           </select>
+          <!-- v-if="userStore.user?.role === 'user'" -->
           <button
-            v-if="userStore.user?.role === 'user'"
             class="btn"
             @click="animalsStore.getAnimals"
           >

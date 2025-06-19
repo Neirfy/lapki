@@ -85,7 +85,7 @@ onUnmounted(()=>{
             </span>
             <label>Вид животного: </label>
             <span>
-              {{ animalStore.animal?.type ?? 'Не указано'}}
+              {{ animalStore.animal?.type.name ?? 'Не указано'}}
             </span>
             <label for="breed">Порода: </label>
             <span id="breed">
